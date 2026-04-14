@@ -46,6 +46,10 @@ Este sistema automatizado monitorea **Mercado Libre** en tiempo real para detect
 
 <img width="676" height="365" alt="image-telegram" src="https://github.com/user-attachments/assets/776aa297-3720-44c6-814e-a343a3f8062c" />
 
+### Real-Time Telegram Alert / Alerta de Telegram:
+
+<img width="453" height="569" alt="Telegram-bot" src="https://github.com/user-attachments/assets/15e9d1df-a05e-4e6c-9146-3372013d08f6" />
+
 
 #### Final Report Result / Resultado Final del Reporte:
 <img width="1366" height="736" alt="Excel-laptops" src="https://github.com/user-attachments/assets/c5a1c670-8bb6-4c09-b1d4-38c42105d556" />
