@@ -9,26 +9,35 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 from telegram import Bot
 
-# --- 🚀 PARCHE PARA WINDOWS ---
+# --- 🚀 WINDOWS EVENT LOOP PATCH / PARCHE PARA WINDOWS ---
+# Ensures compatibility with asynchronous operations on Windows environments.
+# Asegura la compatibilidad con operaciones asíncronas en entornos Windows.
 if sys.platform == 'win32':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-# --- 🔑 CONFIGURACIÓN DE TELEGRAM ---
+# --- 🔑 TELEGRAM CONFIGURATION / CONFIGURACIÓN DE TELEGRAM ---
 TOKEN_TELEGRAM = "TU_TOKEN_AQUI"
 CHAT_ID = "TU_ID_AQUI"
 
 
-# --- 🥊 FUNCIÓN DE PUNTAJE ---
+# --- 🥊 UFC SCORING ALGORITHM / ALGORITMO DE PUNTAJE "UFC" ---
+# Evaluates hardware specs vs. price to identify "Top Tier" deals.
+# Evalúa especificaciones de hardware vs. precio para identificar ofertas "Nivel Pro".
 def calcular_puntaje_pro_v3(nombre, precio_usd):
     n = nombre.lower()
+    # Processor and RAM weight / Ponderación de procesador y RAM
     p = 10 if "i7" in n else (7 if "i5" in n else 4)
     p += 8 if "16gb" in n else (12 if "32gb" in n else 4)
+    
+    # Penalization for damaged units / Penalización por unidades dañadas
     detalles = ["pantalla mala", "reparar", "repuesto", "sin disco", "detalle", "quemado", "mica", "partido"]
     if any(d in n for d in detalles): p -= 30
     return round((p / precio_usd) * 100, 2) if precio_usd > 0 else 0
 
 
-# --- 📲 FUNCIÓN DE ALERTA ---
+# --- 📲 REAL-TIME TELEGRAM ALERT / ALERTA DE TELEGRAM EN TIEMPO REAL ---
+# Sends instant notifications for high-value listings to the mobile device.
+# Envía notificaciones instantáneas de ofertas de alto valor al dispositivo móvil.
 async def enviar_alerta(modelo, precio, puntaje, enlace):
     try:
         bot = Bot(token=TOKEN_TELEGRAM)
@@ -45,26 +54,29 @@ async def enviar_alerta(modelo, precio, puntaje, enlace):
         print(f"❌ Error en Telegram: {e}")
 
 
-# --- 1. EXTRACCIÓN ---
+# --- 1. DATA EXTRACTION / EXTRACCIÓN DE DATOS ---
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 lista_laptops = []
 
 try:
     driver.get("https://www.mercadolibre.com.ve")
-    # Cargar cookies guardadas
+    
+    # Session management using Cookies / Gestión de sesión mediante Cookies
     try:
         cookies = pickle.load(open("ml_cookies.pkl", "rb"))
         for cookie in cookies:
             driver.add_cookie(cookie)
-        driver.refresh()  # Refrescamos para que reconozca la sesión
-        print("🍪 Cookies cargadas. ¡Entrando como Victor!")
+        driver.refresh()
+        print("🍪 Cookies cargadas. ¡Entrando como Usuario!")
     except:
         print("⚠️ No se encontraron cookies. Toca loguearse a mano.")
+        
     print("\n--- 🛡️ MODO MANUAL ---")
     input("LOGUÉATE, RESUELVE EL CAPTCHA Y CUANDO ESTÉS ADENTRO DALE 'ENTER' AQUÍ: ")
 
     base_url = "https://listado.mercadolibre.com.ve/dell-latitude"
 
+    # Iterate through search pages / Iteración a través de las páginas de búsqueda
     for i in range(5):
         driver.get(f"{base_url}_Desde_{(i * 50) + 1}_NoIndex_True")
         print(f"🛰️ Escaneando Página {i + 1}...")
@@ -83,7 +95,7 @@ try:
                 res = {"Modelo": nombre, "Precio $": precio_usd, "Puntaje": puntaje, "Enlace": enlace}
                 lista_laptops.append(res)
 
-                # 🔥 ALERTA EN TIEMPO REAL (Solo si es buena oferta)
+                # Real-time trigger for high-value items / Disparador en tiempo real para ítems de alto valor
                 if puntaje > 8.0:
                     asyncio.run(enviar_alerta(nombre, precio_usd, puntaje, enlace))
 
@@ -91,7 +103,7 @@ try:
                 continue
 
 finally:
-    # --- 📊 2. EXCEL CON FORMATO IMPECABLE ---
+    # --- 📊 2. PROFESSIONAL EXCEL EXPORT / EXPORTACIÓN PROFESIONAL A EXCEL ---
     if lista_laptops:
         df = pd.DataFrame(lista_laptops).sort_values(by="Puntaje", ascending=False)
         nombre_archivo = "Monitor_Dell_UFC_FINAL_BOT_TELEGRAM.xlsx"
@@ -101,20 +113,23 @@ finally:
             workbook = writer.book
             worksheet = writer.sheets['Ranking']
 
+            # Define cell formats / Definición de formatos de celda
             f_header = workbook.add_format(
                 {'bold': True, 'bg_color': 'black', 'font_color': 'white', 'border': 1, 'align': 'center'})
             f_texto = workbook.add_format({'border': 1, 'valign': 'vcenter'})
             f_centrado = workbook.add_format({'border': 1, 'align': 'center', 'valign': 'vcenter'})
 
+            # Apply formatting / Aplicación de formato
             for col_num, value in enumerate(df.columns.values):
                 worksheet.write(0, col_num, value, f_header)
 
             for row_num in range(len(df)):
-                worksheet.write(row_num + 1, 0, df.iloc[row_num, 0], f_texto)  # Modelo
-                worksheet.write(row_num + 1, 1, df.iloc[row_num, 1], f_centrado)  # Precio $
-                worksheet.write(row_num + 1, 2, df.iloc[row_num, 2], f_centrado)  # Puntaje
-                worksheet.write(row_num + 1, 3, df.iloc[row_num, 3], f_texto)  # Enlace
+                worksheet.write(row_num + 1, 0, df.iloc[row_num, 0], f_texto)
+                worksheet.write(row_num + 1, 1, df.iloc[row_num, 1], f_centrado)
+                worksheet.write(row_num + 1, 2, df.iloc[row_num, 2], f_centrado)
+                worksheet.write(row_num + 1, 3, df.iloc[row_num, 3], f_texto)
 
+            # Adjust columns width / Ajuste de ancho de columnas
             worksheet.set_column('A:A', 60)
             worksheet.set_column('B:C', 18)
             worksheet.set_column('D:D', 50)
