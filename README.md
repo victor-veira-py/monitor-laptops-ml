@@ -42,6 +42,9 @@ Este sistema automatizado monitorea **Mercado Libre** en tiempo real para detect
 
 ### 📸 Execution & Output Preview / Vista Previa:
 
+<img width="676" height="365" alt="image-telegram" src="https://github.com/user-attachments/assets/2818d271-c9a0-4583-bbc4-5bff6775aa83" />
+
+
 #### Telegram Notification / Alerta en Telegram:
 <img width="400" alt="telegram_alert" src="AQUÍ_VA_EL_LINK_DE_TU_FOTO_DE_TELEGRAM" />
 
