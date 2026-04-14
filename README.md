@@ -42,14 +42,13 @@ Este sistema automatizado monitorea **Mercado Libre** en tiempo real para detect
 
 ### 📸 Execution & Output Preview / Vista Previa:
 
-<img width="676" height="365" alt="image-telegram" src="https://github.com/user-attachments/assets/2818d271-c9a0-4583-bbc4-5bff6775aa83" />
+#### Bulk Console Output / Salida en Consola:
+
+<img width="676" height="365" alt="image-telegram" src="https://github.com/user-attachments/assets/776aa297-3720-44c6-814e-a343a3f8062c" />
 
 
-#### Telegram Notification / Alerta en Telegram:
-<img width="400" alt="telegram_alert" src="AQUÍ_VA_EL_LINK_DE_TU_FOTO_DE_TELEGRAM" />
-
-#### Excel Report Analysis / Análisis en Excel:
-<img width="800" alt="excel_report" src="AQUÍ_VA_EL_LINK_DE_TU_FOTO_DEL_EXCEL" />
+#### Final Report Result / Resultado Final del Reporte:
+<img width="1366" height="736" alt="Excel-laptops" src="https://github.com/user-attachments/assets/c5a1c670-8bb6-4c09-b1d4-38c42105d556" />
 
 ---
 Developed by / Desarrollado por **VICTOR ARMANDO DE OLIVEIRA RODRÍGUEZ**
