@@ -20,6 +20,13 @@ This automated system monitors **Mercado Libre** in real-time to detect the best
 * **Telegram API** (BotFather)
 * **Pandas / XlsxWriter**
 
+### 🛡️ Anti-Bot & Session Persistence
+To avoid constant re-authentication and potential bot detection, use the `guardar_cookies.py` script:
+1. Run `python guardar_cookies.py`.
+2. Log in manually and solve any CAPTCHAs.
+3. Once logged in, press **Enter** in the terminal to save your session.
+4. Now, `monitor_precios.py` will automatically load these cookies for future runs.
+
 ---
 
 ## Versión en Español
@@ -37,6 +44,13 @@ Este sistema automatizado monitorea **Mercado Libre** en tiempo real para detect
 * **Selenium WebDriver**
 * **Telegram API**
 * **Pandas / XlsxWriter**
+
+### 🛡️ Persistencia de Sesión y Anti-Bot
+Para evitar re-autenticaciones constantes y detección de bot, utiliza el script `guardar_cookies.py`:
+1. Ejecuta `python guardar_cookies.py`.
+2. Inicia sesión manualmente y resuelve cualquier CAPTCHA.
+3. Una vez dentro, presiona **Enter** en la terminal para guardar tu sesión.
+4. Ahora, `monitor_precios.py` cargará automáticamente estas cookies en futuras ejecuciones.
 
 ---
 
